@@ -4,6 +4,7 @@ package com.parcel.distribution.db.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -30,32 +31,19 @@ public class User {
     @Column(name = "password", nullable = false, length = 90)
     private String password;
 
+    @Column(name = "phone_number", length = 12)
+    private String phoneNumber;
+
     @Column(name = "active", nullable = false)
     private boolean active;
 
     @Column(name = "role", nullable = false, length = 20)
     private String role;
 
+    @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="user")
+    private Address address;
+
     public User() {
 
-    }
-
-    public User(String login, String email, String password, boolean active, String role) {
-        this.login = login;
-        this.email = email;
-        this.password = password;
-        this.active = active;
-        this.role = role;
-    }
-
-    public User(Integer id, String name, String surname, String login, String email, String password, boolean active, String role) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.login = login;
-        this.email = email;
-        this.password = password;
-        this.active = active;
-        this.role = role;
     }
 }

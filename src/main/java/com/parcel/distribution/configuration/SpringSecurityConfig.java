@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -53,7 +54,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/parcel/distribution/login", "/parcel/distribution/registration", "/parcel/distribution/error/*").permitAll()
-                .antMatchers("/parcel/distribution/content/*").hasAuthority("ROLE_ADMIN").anyRequest()
+                .antMatchers("/parcel/distribution/content/*").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/parcel/distribution/editprofile/*").hasAuthority("ROLE_ADMIN").anyRequest()
                 .authenticated().and().formLogin()
                 .loginPage("/parcel/distribution/login").failureUrl("/parcel/distribution/error/failureLogin").failureForwardUrl("/parcel/distribution/error/failureLogin")
                 .defaultSuccessUrl("/parcel/distribution/content/index").successForwardUrl("/parcel/distribution/content/index")
@@ -63,7 +65,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("../parcel/distribution/logout")).logoutUrl("../parcel/distribution/logout")
                 .and().exceptionHandling()
                 .accessDeniedPage("/parcel/distribution/error/accessDenied")
-                .and().csrf().disable();
+                .and().csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
 
     }
 
