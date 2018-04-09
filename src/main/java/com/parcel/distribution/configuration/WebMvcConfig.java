@@ -1,5 +1,6 @@
 package com.parcel.distribution.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -10,6 +11,8 @@ import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import javax.servlet.ServletContext;
 
 @Configuration
 @EnableWebMvc
@@ -60,6 +63,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Bean
     public HttpSessionEventPublisher httpSessionEventPublisher() {
         return new HttpSessionEventPublisher();
+    }
+
+    @Bean
+    public ServletContext getServletContext(ServletContext servletContext){
+        return servletContext;
     }
 
     @Override
