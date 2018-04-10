@@ -1,6 +1,7 @@
 package com.parcel.distribution.configuration;
 
 
+import com.parcel.distribution.utils.PasswordEncoderUtil;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,9 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @Data
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private PasswordEncoderUtil passwordEncoderUtil;
 
     @Autowired
     private DataSource dataSource;
@@ -46,6 +50,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource)
                 .usersByUsernameQuery(usersQuery)
                 .authoritiesByUsernameQuery(rolesQuery);
+                //.passwordEncoder(passwordEncoderUtil);
     }
 
 

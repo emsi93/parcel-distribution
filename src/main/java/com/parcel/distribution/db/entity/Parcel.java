@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "parcel", uniqueConstraints = { @UniqueConstraint(columnNames = { "id" }) })
+@Table(name = "parcel", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
 public class Parcel {
 
     @Id
@@ -17,12 +17,25 @@ public class Parcel {
     @Column(name = "status", nullable = false)
     private boolean status;
 
-    @Column(name = "description", nullable = false )
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "code")
+    @Column(name = "code", nullable = false, length = 4)
     private String code;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
+    @OneToOne
+    @JoinColumn(name = "recipient_id", nullable = false)
+    private Recipient recipient;
 
+    @OneToOne
+    @JoinColumn(name = "parcel_info_id", nullable = false)
+    private ParcelInfo parcelInfo;
+
+    @ManyToOne
+    @JoinColumn(name = "courier_id", nullable = false)
+    private Courier courier;
 }

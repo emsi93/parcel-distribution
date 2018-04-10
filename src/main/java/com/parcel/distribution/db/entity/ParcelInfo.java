@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "parcel_info", uniqueConstraints = { @UniqueConstraint(columnNames = { "id" }) })
+@Table(name = "parcel_info", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
 public class ParcelInfo {
 
     @Id
@@ -15,15 +15,24 @@ public class ParcelInfo {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name = "x", nullable = false)
     private Double x;
 
+    @Column(name = "y", nullable = false)
     private Double y;
 
+    @Column(name = "z", nullable = false)
     private Double z;
 
+    @Column(name = "weight", nullable = false)
     private Double weight;
 
-    private LocalDateTime dataNadania;
+    @Column(name = "price", nullable = false)
+    private Double price;
 
-    private LocalDateTime dataOdebrania;
+    @Column(name = "date_of_delivery")
+    private LocalDateTime dateOfDelivery;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parcelInfo")
+    private Parcel parcel;
 }

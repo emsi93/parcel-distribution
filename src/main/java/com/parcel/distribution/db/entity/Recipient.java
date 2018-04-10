@@ -6,13 +6,25 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "address", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
-public class Address {
+@Table(name = "recipient", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
+public class Recipient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
+
+    @Column(name = "name", nullable = false, length = 20)
+    private String name;
+
+    @Column(name = "surname", nullable = false, length = 50)
+    private String surname;
+
+    @Column(name = "email", nullable = false, length = 30)
+    private String email;
+
+    @Column(name = "phone_number", nullable = false, length = 12)
+    private String phoneNumber;
 
     @Column(name = "street", nullable = false, length = 50)
     private String street;
@@ -29,11 +41,6 @@ public class Address {
     @Column(name = "city", nullable = false, length = 30)
     private String city;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    public Address() {
-
-    }
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "recipient")
+    private Parcel parcel;
 }
