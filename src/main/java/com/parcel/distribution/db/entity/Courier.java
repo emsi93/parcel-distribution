@@ -21,6 +21,15 @@ public class Courier {
     @Column(name = "surname", nullable = false, length = 50)
     private String surname;
 
+    @Column(name = "login", nullable = false, unique = true, length = 20)
+    private String login;
+
+    @Column(name = "password", nullable = false, length = 90)
+    private String password;
+
+    @Column(name = "email", nullable = false, unique = true, length = 30)
+    private String email;
+
     @Column(name = "phone_number", nullable = false, length = 12)
     private String phoneNumber;
 

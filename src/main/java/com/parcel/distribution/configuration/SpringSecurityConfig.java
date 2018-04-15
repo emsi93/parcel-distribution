@@ -59,9 +59,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/parcel/distribution/login", "/parcel/distribution/registration", "/parcel/distribution/error/*").permitAll()
-                .antMatchers("/parcel/distribution/content/*").hasAuthority("ROLE_ADMIN")
-                .antMatchers("/parcel/distribution/editprofile/*").hasAuthority("ROLE_ADMIN")
-                .antMatchers("/parcel/distribution/download/*").hasAuthority("ROLE_ADMIN").anyRequest()
+                .antMatchers("/parcel/distribution/content/*").permitAll()
+                .antMatchers("/parcel/distribution/admin/*").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/parcel/distribution/editprofile/*").hasAuthority("ROLE_USER")
+                .antMatchers("/parcel/distribution/download/*").hasAuthority("ROLE_USER").anyRequest()
                 .authenticated().and().formLogin()
                 .loginPage("/parcel/distribution/login").failureUrl("/parcel/distribution/error/failureLogin").failureForwardUrl("/parcel/distribution/error/failureLogin")
                 .defaultSuccessUrl("/parcel/distribution/content/index").successForwardUrl("/parcel/distribution/content/index")
