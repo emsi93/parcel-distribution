@@ -19,4 +19,9 @@ public class ErrorController {
     public ModelAndView accessDenied() {
         return new ModelAndView("error/accessDenied_view");
     }
+
+    @RequestMapping("errorLink")
+    public ModelAndView errorLink() {
+        return new ModelAndView("error/errorLink_view");
+    }
 }

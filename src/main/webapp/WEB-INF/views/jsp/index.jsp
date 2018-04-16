@@ -6,8 +6,8 @@
         <c:if test = "${role == 'ROLE_ADMIN'}">
             <div class="list-group">
                 <a class="list-group-item" href="/parcel/distribution/admin/addcourier"><i class="fa fa-home fa-fw"></i>&nbsp; <spring:message code='addcourier.title'/></a>
-                <a class="list-group-item" href="#"><i class="fa fa-book fa-fw"></i>&nbsp; Library</a>
-                <a class="list-group-item" href="#"><i class="fa fa-pencil fa-fw"></i>&nbsp; Applications</a>
+                <a class="list-group-item" href="/parcel/distribution/admin/addadmin"><i class="fa fa-book fa-fw"></i>&nbsp; <spring:message code='addadmin.title'/></a>
+                <a class="list-group-item" href="/parcel/distribution/admin/courierlist"><i class="fa fa-pencil fa-fw"></i>&nbsp; <spring:message code='admin.courierlist'/></a>
                 <a class="list-group-item" href="#"><i class="fa fa-cog fa-fw"></i>&nbsp; Settings</a>
             </div>
         </c:if>
