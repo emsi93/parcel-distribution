@@ -12,7 +12,7 @@
             </div>
         </c:if>
 
-        <a href="/parcel/distribution/logout"><spring:message code='logout.button'/></a>
+        <a href="<c:url value="/parcel/distribution/logout" />"><spring:message code='logout.button'/></a>
     </div>
     <div class="col-lg-4"></div>
 </div>
