@@ -12,4 +12,6 @@ public interface ParcelService {
 
     ModelAndView newParcel(Principal principal, ParcelForm parcelForm, BindingResult bindingResult);
 
+    ModelAndView getParcelList(Principal principal);
 }
+

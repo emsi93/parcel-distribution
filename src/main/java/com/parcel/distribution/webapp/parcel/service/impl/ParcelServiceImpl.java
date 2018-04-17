@@ -7,6 +7,7 @@ import com.parcel.distribution.db.entity.User;
 import com.parcel.distribution.db.repository.ParcelRepository;
 import com.parcel.distribution.db.repository.UserRepository;
 import com.parcel.distribution.utils.Code;
+import com.parcel.distribution.webapp.email.service.EmailService;
 import com.parcel.distribution.webapp.parcel.form.ParcelForm;
 import com.parcel.distribution.webapp.parcel.service.ParcelService;
 import com.parcel.distribution.webapp.parcel.validator.ParcelFormValidator;
@@ -37,6 +38,9 @@ public class ParcelServiceImpl implements ParcelService {
     @Autowired
     private ParcelRepository parcelRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     @Override
     public ModelAndView newParcel(ParcelForm parcelForm) {
         ModelAndView modelAndView = new ModelAndView(NEW_PARCEL_VIEW_JSP);
@@ -65,6 +69,11 @@ public class ParcelServiceImpl implements ParcelService {
             parcelRepository.save(parcel);
             return newParcel(parcelForm);
         }
+    }
+
+    @Override
+    public ModelAndView getParcelList(Principal principal) {
+        return null;
     }
 
     private ParcelInfo createParcelInfo(ParcelForm parcelForm) {

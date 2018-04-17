@@ -50,7 +50,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource)
                 .usersByUsernameQuery(usersQuery)
                 .authoritiesByUsernameQuery(rolesQuery);
-                //.passwordEncoder(passwordEncoderUtil);
+        //.passwordEncoder(passwordEncoderUtil);
     }
 
 
@@ -58,9 +58,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/parcel/distribution/login", "/parcel/distribution/registration", "/parcel/distribution/error/*").permitAll()
-                .antMatchers("/parcel/distribution/content/*").permitAll()
-                .antMatchers("/parcel/distribution/activeuser/*").permitAll()
+                .antMatchers("/parcel/distribution/login", "/parcel/distribution/registration", "/parcel/distribution/error/*", "/parcel/distribution/activeuser/*").permitAll()
+                .antMatchers("/parcel/distribution/content/*").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
                 .antMatchers("/parcel/distribution/admin/*").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/parcel/distribution/editprofile/*").hasAuthority("ROLE_USER")
                 .antMatchers("/parcel/distribution/parcel/*").hasAuthority("ROLE_USER")
