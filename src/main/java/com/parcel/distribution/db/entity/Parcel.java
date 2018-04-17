@@ -27,15 +27,15 @@ public class Parcel {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "recipient_id", nullable = false)
     private Recipient recipient;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parcel_info_id", nullable = false)
     private ParcelInfo parcelInfo;
 
     @ManyToOne
-    @JoinColumn(name = "courier_id", nullable = false)
+    @JoinColumn(name = "courier_id")
     private Courier courier;
 }
