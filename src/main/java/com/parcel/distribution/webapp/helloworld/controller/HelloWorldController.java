@@ -10,17 +10,23 @@ import org.springframework.web.servlet.ModelAndView;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/parcel/distribution/content")
 public class HelloWorldController {
 
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping("/index")
-    public ModelAndView helloWorld(Principal principal) {
+    @RequestMapping("/parcel/distribution/content/index")
+    public ModelAndView index(Principal principal) {
         ModelAndView modelAndView = new ModelAndView("index");
         String role = userRepository.findByLogin(principal.getName()).getRole();
         modelAndView.addObject("role", role);
         return modelAndView;
     }
+
+    @RequestMapping("/")
+    public ModelAndView helloWorld() {
+        ModelAndView modelAndView = new ModelAndView("helloWorld");
+        return modelAndView;
+    }
+
 }

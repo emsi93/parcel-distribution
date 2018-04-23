@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -58,7 +57,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/parcel/distribution/login", "/parcel/distribution/registration", "/parcel/distribution/error/*", "/parcel/distribution/activeuser/*").permitAll()
+                .antMatchers("/", "/parcel/distribution/login", "/parcel/distribution/registration", "/parcel/distribution/error/*", "/parcel/distribution/activeuser/*").permitAll()
                 .antMatchers("/parcel/distribution/content/*").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
                 .antMatchers("/parcel/distribution/admin/*").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/parcel/distribution/editprofile/*").hasAuthority("ROLE_USER")
