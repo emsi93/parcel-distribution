@@ -102,7 +102,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="x"><spring:message code='edit.profile.city'/></label>
+                            <label for="x">x</label>
                             <form:input id="x" name="x" type="number" path="x" class="form-control" />
                             <div class="errors">
                                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -110,7 +110,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="y"><spring:message code='edit.profile.city'/></label>
+                            <label for="y">y</label>
                             <form:input id="y" name="y" type="number" path="y" class="form-control" />
                             <div class="errors">
                                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -118,7 +118,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="z"><spring:message code='edit.profile.city'/></label>
+                            <label for="z">z</label>
                             <form:input id="z" name="z" type="number" path="z" class="form-control" />
                             <div class="errors">
                                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>

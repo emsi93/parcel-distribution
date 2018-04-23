@@ -16,5 +16,5 @@
 <script src="/resources/js/main.js"></script>
 <script src="${recaptchaUrl}"></script>
 <body class="page">
-    <div class="container">
-
+    <%@include file="navbar.jsp" %>
+        <div class="container">
