@@ -1,8 +1,7 @@
 package com.parcel.distribution.webapp.edit_profile.controller;
 
 
-import com.parcel.distribution.webapp.edit_profile.form.AddressForm;
-import com.parcel.distribution.webapp.edit_profile.form.FirstForm;
+import com.parcel.distribution.webapp.edit_profile.form.EditProfileForm;
 import com.parcel.distribution.webapp.edit_profile.service.EditProfileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,22 +22,12 @@ public class EditProfileController {
     private EditProfileService service;
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public ModelAndView editProfileFirstGet(Principal principal, FirstForm firstForm) {
-        return service.editProfileFirstGet(principal, firstForm);
+    public ModelAndView editProfile(Principal principal, EditProfileForm editProfileForm) {
+        return service.editProfile(principal, editProfileForm);
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ModelAndView editProfileFirstPost(Principal principal, FirstForm firstForm, BindingResult bindingResult) {
-        return service.editProfileFirstPost(principal, firstForm, bindingResult);
-    }
-
-    @RequestMapping(value = "/edit_address", method = RequestMethod.GET)
-    public ModelAndView editAddressGet(Principal principal, AddressForm addressForm) {
-        return service.editAddressGet(principal, addressForm);
-    }
-
-    @RequestMapping(value = "/edit_address", method = RequestMethod.POST)
-    public ModelAndView editAddressPost(Principal principal, AddressForm addressForm, BindingResult bindingResult) {
-        return service.editAddressPost(principal, addressForm, bindingResult);
+    public ModelAndView editProfile(Principal principal, EditProfileForm editProfileForm, BindingResult bindingResult) {
+        return service.editProfile(principal, editProfileForm, bindingResult);
     }
 }

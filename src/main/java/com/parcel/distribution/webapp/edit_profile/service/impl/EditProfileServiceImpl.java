@@ -4,11 +4,9 @@ import com.parcel.distribution.db.entity.Address;
 import com.parcel.distribution.db.entity.User;
 import com.parcel.distribution.db.repository.AddressRepository;
 import com.parcel.distribution.db.repository.UserRepository;
-import com.parcel.distribution.webapp.edit_profile.form.AddressForm;
-import com.parcel.distribution.webapp.edit_profile.form.FirstForm;
+import com.parcel.distribution.webapp.edit_profile.form.EditProfileForm;
 import com.parcel.distribution.webapp.edit_profile.service.EditProfileService;
-import com.parcel.distribution.webapp.edit_profile.validator.AddressFormValidator;
-import com.parcel.distribution.webapp.edit_profile.validator.FirstFormValidator;
+import com.parcel.distribution.webapp.edit_profile.validator.EditFormValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -26,7 +24,6 @@ import java.security.Principal;
 public class EditProfileServiceImpl implements EditProfileService {
 
     private static final String EDIT_PROFILE_VIEW_JSP = "edit_profile/edit";
-    private static final String EDIT_ADDRESS_VIEW_JSP = "edit_profile/edit_address";
 
     @Autowired
     private UserRepository userRepository;
@@ -35,84 +32,61 @@ public class EditProfileServiceImpl implements EditProfileService {
     private AddressRepository addressRepository;
 
     @Autowired
-    private FirstFormValidator firstFormValidator;
-
-    @Autowired
-    private AddressFormValidator addressFormValidator;
-
+    private EditFormValidator editFormValidator;
 
     @Override
-    public ModelAndView editProfileFirstGet(Principal principal, FirstForm firstForm) {
+    public ModelAndView editProfile(Principal principal, EditProfileForm editProfileForm) {
         ModelAndView modelAndView = new ModelAndView(EDIT_PROFILE_VIEW_JSP);
         String role = userRepository.findByLogin(principal.getName()).getRole();
         modelAndView.addObject("role", role);
         modelAndView.addObject("username", principal.getName());
+        User user = userRepository.findByLogin(principal.getName());
 
-        if (firstForm.getName() == null){
-            User user = userRepository.findByLogin(principal.getName());
-            firstForm.setName(user.getName());
-            firstForm.setSurname(user.getSurname());
-            firstForm.setPhoneNumber(user.getPhoneNumber());
+        if (editProfileForm.getName() == null) {
+            editProfileForm.setName(user.getName());
+            editProfileForm.setSurname(user.getSurname());
+            editProfileForm.setPhoneNumber(user.getPhoneNumber());
         }
-        modelAndView.addObject("firstForm", firstForm);
-        return modelAndView;
-    }
 
-    @Override
-    public ModelAndView editProfileFirstPost(Principal principal, FirstForm firstForm, BindingResult bindingResult) {
-        firstFormValidator.validate(firstForm, bindingResult);
-        if (bindingResult.hasErrors()){
-            return editProfileFirstGet(principal, firstForm);
-        }else{
-            ModelAndView modelAndView = new ModelAndView(EDIT_ADDRESS_VIEW_JSP);
-            User user = userRepository.findByLogin(principal.getName());
-            user.setName(firstForm.getName());
-            user.setSurname(firstForm.getSurname());
-            user.setPhoneNumber(firstForm.getPhoneNumber());
-            userRepository.save(user);
-            modelAndView.addObject("addressForm", new AddressForm());
-            return modelAndView;
-        }
-    }
-
-    @Override
-    public ModelAndView editAddressGet(Principal principal, AddressForm addressForm) {
-        ModelAndView modelAndView = new ModelAndView(EDIT_ADDRESS_VIEW_JSP);
-        String role = userRepository.findByLogin(principal.getName()).getRole();
-        modelAndView.addObject("role", role);
-        modelAndView.addObject("username", principal.getName());
-
-        if(addressForm.getStreet() == null){
-            User user = userRepository.findByLogin(principal.getName());
+        if (editProfileForm.getStreet() == null) {
             Address address = addressRepository.findByUser(user);
-            addressForm.setCity(address.getCity());
-            addressForm.setPostCode(address.getPostCode());
-            addressForm.setStreet(address.getStreet());
-            addressForm.setStreetNumber(address.getStreetNumber());
-            addressForm.setFlatNumber(address.getFlatNumber());
+            editProfileForm.setCity(address.getCity());
+            editProfileForm.setPostCode(address.getPostCode());
+            editProfileForm.setStreet(address.getStreet());
+            editProfileForm.setStreetNumber(address.getStreetNumber());
+            editProfileForm.setFlatNumber(address.getFlatNumber());
         }
-
-        modelAndView.addObject("addressForm", addressForm);
+        modelAndView.addObject("editProfileForm", editProfileForm);
         return modelAndView;
     }
 
     @Override
-    public ModelAndView editAddressPost(Principal principal, AddressForm addressForm, BindingResult bindingResult) {
-        addressFormValidator.validate(addressForm, bindingResult);
-        if (bindingResult.hasErrors()){
-            return editAddressGet(principal, addressForm);
-        }else{
+    public ModelAndView editProfile(Principal principal, EditProfileForm editProfileForm, BindingResult bindingResult) {
+        editFormValidator.validate(editProfileForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return editProfile(principal, editProfileForm);
+        } else {
             User user = userRepository.findByLogin(principal.getName());
-            Address address = new Address();
-            address.setStreet(addressForm.getStreet());
-            address.setStreetNumber(addressForm.getStreetNumber());
-            address.setFlatNumber(addressForm.getFlatNumber());
-            address.setPostCode(addressForm.getPostCode());
-            address.setCity(addressForm.getCity());
+            user.setName(editProfileForm.getName());
+            user.setSurname(editProfileForm.getSurname());
+            user.setPhoneNumber(editProfileForm.getPhoneNumber());
+
+            Address address = createAddress(editProfileForm);
             address.setUser(user);
-            addressRepository.save(address);
-            ModelAndView modelAndView = new ModelAndView(EDIT_ADDRESS_VIEW_JSP);
-            return modelAndView;
+
+            userRepository.save(user);
+            return editProfile(principal, editProfileForm);
         }
+    }
+
+
+    private Address createAddress(EditProfileForm editProfileForm) {
+        Address address = new Address();
+        address.setStreet(editProfileForm.getStreet());
+        address.setStreetNumber(editProfileForm.getStreetNumber());
+        address.setFlatNumber(editProfileForm.getFlatNumber());
+        address.setPostCode(editProfileForm.getPostCode());
+        address.setCity(editProfileForm.getCity());
+        return address;
     }
 }
