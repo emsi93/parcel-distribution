@@ -44,6 +44,9 @@ public class EditProfileServiceImpl implements EditProfileService {
     @Override
     public ModelAndView editProfileFirstGet(Principal principal, FirstForm firstForm) {
         ModelAndView modelAndView = new ModelAndView(EDIT_PROFILE_VIEW_JSP);
+        String role = userRepository.findByLogin(principal.getName()).getRole();
+        modelAndView.addObject("role", role);
+        modelAndView.addObject("username", principal.getName());
 
         if (firstForm.getName() == null){
             User user = userRepository.findByLogin(principal.getName());
@@ -75,6 +78,9 @@ public class EditProfileServiceImpl implements EditProfileService {
     @Override
     public ModelAndView editAddressGet(Principal principal, AddressForm addressForm) {
         ModelAndView modelAndView = new ModelAndView(EDIT_ADDRESS_VIEW_JSP);
+        String role = userRepository.findByLogin(principal.getName()).getRole();
+        modelAndView.addObject("role", role);
+        modelAndView.addObject("username", principal.getName());
 
         if(addressForm.getStreet() == null){
             User user = userRepository.findByLogin(principal.getName());

@@ -1,5 +1,7 @@
 <%@include file="../includes/top.jsp" %>
-<div class="row error-top">
+<%@include file="../includes/navbar.jsp" %>
+<div class="container">
+<div class="row">
     <div class="col-lg-4"></div>
     <div class="col-lg-4">
         <div class="panel panel-warning box">
@@ -56,5 +58,6 @@
         </div>
     </div>
     <div class="col-lg-4"></div>
+</div>
 </div>
 <%@include file="../includes/bottom.jsp" %>

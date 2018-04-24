@@ -18,13 +18,13 @@ public class ParcelController {
     @Autowired
     private ParcelService parcelService;
 
-    @RequestMapping(value="/newparcel", method = RequestMethod.GET)
-    public ModelAndView newParcel(ParcelForm parcelForm){
-        return parcelService.newParcel(parcelForm);
+    @RequestMapping(value = "/newparcel", method = RequestMethod.GET)
+    public ModelAndView newParcel(Principal principal, ParcelForm parcelForm) {
+        return parcelService.newParcel(principal, parcelForm);
     }
 
-    @RequestMapping(value="/newparcel", method = RequestMethod.POST)
-    public ModelAndView newParcel(Principal principal, ParcelForm parcelForm, BindingResult bindingResult){
+    @RequestMapping(value = "/newparcel", method = RequestMethod.POST)
+    public ModelAndView newParcel(Principal principal, ParcelForm parcelForm, BindingResult bindingResult) {
         return parcelService.newParcel(principal, parcelForm, bindingResult);
     }
 }

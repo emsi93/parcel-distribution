@@ -1,14 +1,8 @@
 ﻿<nav class="navbar navbar-inverse" role="navigation">
     <div class="container">
-        <!-- Grupowanie "marki" i przycisku rozwijania mobilnego menu -->
+
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
-                <span class="sr-only">Rozwiń nawigację</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">"Marka - Logo strony"</a>
+            <a class="navbar-brand" href="/parcel/distribution/content/index">Parcel Distribution App</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
@@ -16,30 +10,44 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Akcja</a></li>
-                        <li><a href="#">Inna akcja</a></li>
-                        <li><a href="#">Coś jeszcze innego</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Oddzielone linki</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Jeszcze jeden oddzielony link</a></li>
+
+                        <c:if test="${role == 'ROLE_ADMIN'}">
+                            <li><a href="/parcel/distribution/admin/addcourier"><spring:message
+                                    code='addcourier.title'/></a></li>
+                            <li class="divider"></li>
+                            <li><a href="/parcel/distribution/admin/addadmin"><spring:message
+                                    code='addadmin.title'/></a></li>
+                            <li class="divider"></li>
+                            <li><a href="/parcel/distribution/admin/courierlist"><spring:message
+                                    code='addadmin.title'/></a></li>
+                        </c:if>
+                        <c:if test="${role == 'ROLE_USER'}">
+                            <li><a href="/parcel/distribution/parcel/newparcel"><spring:message
+                                    code='newparcel.navbar.button'/></a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Jeszcze jeden oddzielony link</a></li>
+                        </c:if>
                     </ul>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Konto <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><spring:message code='account.navbar'/>
+                        <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Akcja</a></li>
-                        <li><a href="#">Inna akcja</a></li>
-                        <li><a href="#">Coś jeszcze innego</a></li>
+                        <li><a><spring:message code="signed.as"/> <strong>${username}</strong></a></li>
                         <li class="divider"></li>
-                        <li><a href="#">Oddzielone linki</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Jeszcze jeden oddzielony link</a></li>
+                        <c:if test="${role == 'ROLE_USER'}">
+                            <li><a href="/parcel/distribution/editprofile/edit"><spring:message
+                                    code='edit.profile.title'/></a></li>
+                            <li class="divider"></li>
+                        </c:if>
+                        <li><a href="<c:url value="/parcel/distribution/logout" />"><spring:message
+                                code='logout.button'/></a></li>
                     </ul>
                 </li>
             </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+        </div>
+    </div>
 </nav>
+<%@include file="languages.jsp" %>

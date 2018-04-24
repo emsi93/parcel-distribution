@@ -8,7 +8,7 @@ import java.security.Principal;
 
 public interface ParcelService {
 
-    ModelAndView newParcel(ParcelForm parcelForm);
+    ModelAndView newParcel(Principal principal, ParcelForm parcelForm);
 
     ModelAndView newParcel(Principal principal, ParcelForm parcelForm, BindingResult bindingResult);
 

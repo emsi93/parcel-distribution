@@ -4,8 +4,14 @@
 .page{
     background-color:#f9f9f9;
 }
-.footer{
-    margin-bottom: 5%;
+
+.footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    height: 80px;
+    line-height: 60px;
+    background-color: #b3ffff;
 }
 .error-top{
     margin-top: 10%;
@@ -28,3 +34,4 @@
 .closebtn:hover {
     color: black;
 }
+

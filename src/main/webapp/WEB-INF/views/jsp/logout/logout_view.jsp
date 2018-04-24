@@ -1,36 +1,12 @@
 <%@include file="../includes/top.jsp" %>
-<div class="col-lg-1"></div>
-<div class="col-lg-10">
-    <div class="alert alert-success">
-        <h3><strong><spring:message code='logout.message'/></strong></h3>
-    </div>
-</div>
-<div class="col-lg-1"></div>
-<div class="row">
+<%@include file="../includes/navbar2.jsp" %>
+<div class="container">
     <div class="col-lg-1"></div>
-    <div class="col-lg-10"></div>
-    <div class="col-lg-1">
-        <a href="/parcel/distribution/login/" class="btn btn-success"><spring:message code='logout.home'/></a>
+    <div class="col-lg-10">
+        <div class="alert alert-success">
+            <h3><strong><spring:message code='logout.message'/></strong></h3>
+        </div>
     </div>
+    <div class="col-lg-1"></div>
 </div>
-</div>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
 <%@include file="../includes/bottom.jsp" %>

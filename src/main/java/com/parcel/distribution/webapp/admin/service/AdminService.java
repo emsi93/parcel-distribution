@@ -2,19 +2,20 @@ package com.parcel.distribution.webapp.admin.service;
 
 import com.parcel.distribution.webapp.admin.form.AdminForm;
 import com.parcel.distribution.webapp.admin.form.CourierForm;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
+
 public interface AdminService {
 
-    ModelAndView addCourier(CourierForm courierForm);
+    ModelAndView addCourier(Principal principal, CourierForm courierForm);
 
-    ModelAndView addCourier(CourierForm courierForm, BindingResult bindingResult);
+    ModelAndView addCourier(Principal principal, CourierForm courierForm, BindingResult bindingResult);
 
-    ModelAndView addAdmin(AdminForm adminForm);
+    ModelAndView addAdmin(Principal principal, AdminForm adminForm);
 
-    ModelAndView addAdmin(AdminForm adminForm, BindingResult bindingResult);
+    ModelAndView addAdmin(Principal principal, AdminForm adminForm, BindingResult bindingResult);
 
-    ModelAndView courierList();
+    ModelAndView courierList(Principal principal);
 }

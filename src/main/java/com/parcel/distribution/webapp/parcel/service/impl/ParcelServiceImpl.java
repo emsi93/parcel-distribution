@@ -42,8 +42,11 @@ public class ParcelServiceImpl implements ParcelService {
     private EmailService emailService;
 
     @Override
-    public ModelAndView newParcel(ParcelForm parcelForm) {
+    public ModelAndView newParcel(Principal principal, ParcelForm parcelForm) {
         ModelAndView modelAndView = new ModelAndView(NEW_PARCEL_VIEW_JSP);
+        String role = userRepository.findByLogin(principal.getName()).getRole();
+        modelAndView.addObject("role", role);
+        modelAndView.addObject("username", principal.getName());
         modelAndView.addObject("parcelForm", parcelForm);
         return modelAndView;
     }
@@ -52,7 +55,7 @@ public class ParcelServiceImpl implements ParcelService {
     public ModelAndView newParcel(Principal principal, ParcelForm parcelForm, BindingResult bindingResult) {
         parcelFormValidator.validate(parcelForm, bindingResult);
         if (bindingResult.hasErrors()){
-            return newParcel(parcelForm);
+            return newParcel(principal, parcelForm);
         }else{
             Recipient recipient = createRecipient(parcelForm);
             ParcelInfo parcelInfo = createParcelInfo(parcelForm);
@@ -67,7 +70,7 @@ public class ParcelServiceImpl implements ParcelService {
             parcel.setDescription(parcelForm.getDescription());
 
             parcelRepository.save(parcel);
-            return newParcel(parcelForm);
+            return newParcel(principal, parcelForm);
         }
     }
 

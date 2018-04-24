@@ -1,14 +1,10 @@
-<div class="row footer">
-    <div class="col-lg-4"></div>
-    <div class="col-lg-4">
-        <h6><span><label><spring:message code='languages'/></label>
-                <a href="" onclick="changeLanguage('en')"><spring:message code='english'/></a>
-                <a href="" onclick="changeLanguage('pl')"><spring:message code='polish'/></a></span></h6>
+﻿<footer class="footer">
+    <div class="container">
+        <div align="center">
+            <span class="text-muted">Michał Krejpowicz Parcel Distribution App 2018</span>
+        </div>
     </div>
-    <div class="col-lg-4"></div>
-</div>
-</div>
-</div>
+</footer>
 </body>
 </html>
 

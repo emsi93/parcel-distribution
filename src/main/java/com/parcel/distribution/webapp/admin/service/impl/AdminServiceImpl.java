@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.List;
 
 @Slf4j
@@ -42,17 +43,20 @@ public class AdminServiceImpl implements AdminService {
     private UserRepository userRepository;
 
     @Override
-    public ModelAndView addCourier(CourierForm courierForm) {
+    public ModelAndView addCourier(Principal principal, CourierForm courierForm) {
         ModelAndView modelAndView = new ModelAndView(ADMIN_ADD_COURIER_VIEW_JSP);
+        String role = userRepository.findByLogin(principal.getName()).getRole();
+        modelAndView.addObject("role", role);
+        modelAndView.addObject("username", principal.getName());
         modelAndView.addObject("courierForm", courierForm);
         return modelAndView;
     }
 
     @Override
-    public ModelAndView addCourier(CourierForm courierForm, BindingResult bindingResult) {
+    public ModelAndView addCourier(Principal principal, CourierForm courierForm, BindingResult bindingResult) {
         courierValidator.validate(courierForm, bindingResult);
         if (bindingResult.hasErrors()) {
-            return addCourier(courierForm);
+            return addCourier(principal, courierForm);
         } else {
             Courier courier = new Courier();
             courier.setActive(true);
@@ -63,25 +67,26 @@ public class AdminServiceImpl implements AdminService {
             courier.setPhoneNumber(courierForm.getPhoneNumber());
             courier.setEmail(courierForm.getEmail());
             courierRepository.save(courier);
-            return addCourier(courierForm);
+            return addCourier(principal, courierForm);
         }
     }
 
     @Override
-    public ModelAndView addAdmin(AdminForm adminForm) {
+    public ModelAndView addAdmin(Principal principal, AdminForm adminForm) {
         ModelAndView modelAndView = new ModelAndView(ADMIN_ADD_ADMIN_VIEW_JSP);
+        String role = userRepository.findByLogin(principal.getName()).getRole();
+        modelAndView.addObject("role", role);
+        modelAndView.addObject("username", principal.getName());
         modelAndView.addObject("adminForm", adminForm);
         return modelAndView;
     }
 
     @Override
-    public ModelAndView addAdmin(AdminForm adminForm, BindingResult bindingResult){
+    public ModelAndView addAdmin(Principal principal, AdminForm adminForm, BindingResult bindingResult) {
         adminValidator.validate(adminForm, bindingResult);
-        if(bindingResult.hasErrors())
-        {
-            return addAdmin(adminForm);
-        }else
-        {
+        if (bindingResult.hasErrors()) {
+            return addAdmin(principal, adminForm);
+        } else {
             User user = new User();
             user.setRole("ROLE_ADMIN");
             user.setActive(true);
@@ -92,13 +97,16 @@ public class AdminServiceImpl implements AdminService {
             user.setName(adminForm.getName());
             user.setSurname(adminForm.getSurname());
             userRepository.save(user);
-            return addAdmin(adminForm);
+            return addAdmin(principal, adminForm);
         }
     }
 
     @Override
-    public ModelAndView courierList() {
+    public ModelAndView courierList(Principal principal) {
         ModelAndView modelAndView = new ModelAndView(ADMIN_COURIER_LIST_VIEW_JSP);
+        String role = userRepository.findByLogin(principal.getName()).getRole();
+        modelAndView.addObject("role", role);
+        modelAndView.addObject("username", principal.getName());
         List<Courier> courierList = courierRepository.findAll();
         modelAndView.addObject("courierList", courierList);
         return modelAndView;
