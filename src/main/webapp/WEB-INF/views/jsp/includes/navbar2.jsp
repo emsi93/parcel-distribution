@@ -1,7 +1,7 @@
 ﻿<nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/parcel/distribution/">Parcel Distribution App</a>
+            <a class="navbar-brand" href="/">Parcel Distribution App</a>
         </div>
         <ul class="nav navbar-nav">
             <li><a href="/about"><spring:message code="about"/></a></li>

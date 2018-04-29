@@ -54,6 +54,8 @@
                                     <form:errors path="street" element="div"/>
                                 </div>
                             </div>
+
+
                             <div class="form-group">
                                 <label for="streetNumber"><spring:message code='edit.profile.street.number'/></label>
                                 <form:input id="streetNumber" name="streetNumber" type="text" path="streetNumber"
