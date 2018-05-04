@@ -55,17 +55,17 @@ public class RegistrationServiceImpl implements RegistrationService {
         userValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
             return registration(request, response, userForm);
+        } else{
+            User user = new User();
+            user.setActive(false);
+            user.setRole("ROLE_USER");
+            user.setPassword(userForm.getPassword());
+            user.setLogin(userForm.getLogin());
+            user.setEmail(userForm.getEmail());
+            user.setPassword(userForm.getPassword());
+            userRepository.save(user);
+            emailService.sendEmail(new EmailActivation(user.getEmail(), host));
+            return registration(request, response, new UserForm(null, null, null, null));
         }
-
-        User user = new User();
-        user.setActive(false);
-        user.setRole("ROLE_USER");
-        user.setPassword(userForm.getPassword());
-        user.setLogin(userForm.getLogin());
-        user.setEmail(userForm.getEmail());
-        user.setPassword(userForm.getPassword());
-        userRepository.save(user);
-        emailService.sendEmail(new EmailActivation(user.getEmail(), host));
-        return registration(request, response, new UserForm(null, null, null, null));
     }
 }
