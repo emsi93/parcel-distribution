@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "parcel", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})}, schema = "myapp")
+@Table(name = "parcel", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
 public class Parcel {
 
     @Id
