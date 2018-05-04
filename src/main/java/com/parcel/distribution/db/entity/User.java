@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "user", uniqueConstraints = { @UniqueConstraint(columnNames = { "id" }) })
+@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})}, schema = "myapp")
 public class User {
 
     @Id
@@ -39,10 +39,10 @@ public class User {
     @Column(name = "role", nullable = false, length = 20)
     private String role;
 
-    @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="user")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private Address address;
 
-    @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="user")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private Parcel parcel;
 
     public User() {

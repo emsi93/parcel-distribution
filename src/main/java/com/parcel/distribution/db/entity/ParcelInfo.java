@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "parcel_info", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
+@Table(name = "parcel_info", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})}, schema = "myapp")
 public class ParcelInfo {
 
     @Id

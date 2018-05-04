@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "courier", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
+@Table(name = "courier", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})}, schema = "myapp")
 public class Courier {
 
     @Id
