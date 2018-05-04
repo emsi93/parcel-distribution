@@ -1,6 +1,5 @@
 package com.parcel.distribution.webapp.registration.service.impl;
 
-import com.parcel.distribution.configuration.CaptchaConfig;
 import com.parcel.distribution.configuration.Config;
 import com.parcel.distribution.db.entity.User;
 import com.parcel.distribution.db.repository.UserRepository;
@@ -8,7 +7,6 @@ import com.parcel.distribution.webapp.email.email.EmailActivation;
 import com.parcel.distribution.webapp.email.service.EmailService;
 import com.parcel.distribution.webapp.registration.form.UserForm;
 import com.parcel.distribution.webapp.registration.service.RegistrationService;
-import com.parcel.distribution.webapp.registration.validator.CaptchaValidator;
 import com.parcel.distribution.webapp.registration.validator.UserValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +41,6 @@ public class RegistrationServiceImpl implements RegistrationService {
     private UserRepository userRepository;
 
     @Autowired
-    private CaptchaConfig captchaConfig;
-
-    @Autowired
-    private CaptchaValidator captchaValidator;
-
-    @Autowired
     private EmailService emailService;
 
     @Override
@@ -56,15 +48,13 @@ public class RegistrationServiceImpl implements RegistrationService {
         ModelAndView modelAndView = new ModelAndView(REGISTRATION_VIEW_JSP);
         modelAndView.addObject("userForm", userForm);
         modelAndView.addObject("recaptchaUrl", returnRecaptchaUrl(request));
-        modelAndView.addObject("recaptchaSiteKey", captchaConfig.getSiteKey());
         return modelAndView;
     }
 
     @Override
     public ModelAndView registration(HttpServletRequest request, HttpServletResponse response, UserForm userForm, BindingResult bindingResult, Model model) throws IOException {
         userValidator.validate(userForm, bindingResult);
-        boolean validCaptcha = captchaValidator.verify(request.getParameter(Config.RECAPTCHA_PARAM));
-        if (bindingResult.hasErrors() || !validCaptcha) {
+        if (bindingResult.hasErrors()) {
             return registration(request, response, userForm);
         }
 

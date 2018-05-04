@@ -46,7 +46,6 @@
                             </div>
                         </div>
                         </br>
-                        <div class="g-recaptcha" data-sitekey="${recaptchaSiteKey}"></div>
                         <spring:message code='registration.create.an.account.button' var="createButton"/>
                         <form:input class="submit btn btn-success" path="" type="submit"
                                     value="${createButton}" id="register"></form:input>
