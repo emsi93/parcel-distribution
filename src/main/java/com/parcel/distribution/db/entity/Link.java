@@ -15,7 +15,7 @@ public class Link {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "link", nullable = false, unique = true, length = 100)
+    @Column(name = "link", nullable = false, unique = true, length = 255)
     private String link;
 
     @Column(name = "email", nullable = false, length = 100)

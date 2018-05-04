@@ -47,7 +47,6 @@ public class RegistrationServiceImpl implements RegistrationService {
     public ModelAndView registration(HttpServletRequest request, HttpServletResponse response, UserForm userForm) {
         ModelAndView modelAndView = new ModelAndView(REGISTRATION_VIEW_JSP);
         modelAndView.addObject("userForm", userForm);
-        modelAndView.addObject("recaptchaUrl", returnRecaptchaUrl(request));
         return modelAndView;
     }
 
@@ -69,31 +68,4 @@ public class RegistrationServiceImpl implements RegistrationService {
         emailService.sendEmail(new EmailActivation(user.getEmail(), host));
         return registration(request, response, new UserForm(null, null, null, null));
     }
-
-    private String returnRecaptchaUrl(HttpServletRequest request) {
-
-        Cookie[] cookies = request.getCookies();
-        String lang = "";
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("my-locale-cookie")) {
-                    lang = cookie.getValue();
-                    break;
-                }
-            }
-        }
-        return returnRecaptchaUrl(lang);
-    }
-
-    private String returnRecaptchaUrl(String lang) {
-        switch (lang) {
-            case "pl":
-                return Config.RECAPTCHA_URL_PL;
-            case "en":
-                return Config.RECAPTCHA_URL_EN;
-            default:
-                return Config.RECAPTCHA_URL_PL;
-        }
-    }
-
 }
