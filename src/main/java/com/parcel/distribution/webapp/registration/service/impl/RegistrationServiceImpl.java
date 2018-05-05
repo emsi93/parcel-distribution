@@ -30,6 +30,7 @@ import java.io.IOException;
 public class RegistrationServiceImpl implements RegistrationService {
 
     private static final String REGISTRATION_VIEW_JSP = "registration/registration_view";
+    private static final String REGISTRATION_SUCCESS_VIEW_JSP = "registration/registration_success";
 
     @Value("${host}")
     private String host;
@@ -57,15 +58,19 @@ public class RegistrationServiceImpl implements RegistrationService {
             return registration(request, response, userForm);
         } else{
             User user = new User();
-            user.setActive(false);
+            user.setActive(true);
             user.setRole("ROLE_USER");
             user.setPassword(userForm.getPassword());
             user.setLogin(userForm.getLogin());
             user.setEmail(userForm.getEmail());
             user.setPassword(userForm.getPassword());
             userRepository.save(user);
-            emailService.sendEmail(new EmailActivation(user.getEmail(), host));
-            return registration(request, response, new UserForm(null, null, null, null));
+            //emailService.sendEmail(new EmailActivation(user.getEmail(), host));
+            return registrationSuccess();
         }
+    }
+
+    public ModelAndView registrationSuccess(){
+        return new ModelAndView(REGISTRATION_SUCCESS_VIEW_JSP);
     }
 }
