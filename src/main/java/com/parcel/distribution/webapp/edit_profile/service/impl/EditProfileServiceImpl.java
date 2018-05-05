@@ -24,6 +24,7 @@ import java.security.Principal;
 public class EditProfileServiceImpl implements EditProfileService {
 
     private static final String EDIT_PROFILE_VIEW_JSP = "edit_profile/edit";
+    private static final String EDIT_PROFILE_SUCCESS_VIEW_JSP = "edit_profile/edit_success";
 
     @Autowired
     private UserRepository userRepository;
@@ -50,11 +51,13 @@ public class EditProfileServiceImpl implements EditProfileService {
 
         if (editProfileForm.getStreet() == null) {
             Address address = addressRepository.findByUser(user);
-            editProfileForm.setCity(address.getCity());
-            editProfileForm.setPostCode(address.getPostCode());
-            editProfileForm.setStreet(address.getStreet());
-            editProfileForm.setStreetNumber(address.getStreetNumber());
-            editProfileForm.setFlatNumber(address.getFlatNumber());
+            if(address != null){
+                editProfileForm.setCity(address.getCity());
+                editProfileForm.setPostCode(address.getPostCode());
+                editProfileForm.setStreet(address.getStreet());
+                editProfileForm.setStreetNumber(address.getStreetNumber());
+                editProfileForm.setFlatNumber(address.getFlatNumber());
+            }
         }
         modelAndView.addObject("editProfileForm", editProfileForm);
         return modelAndView;
@@ -71,17 +74,29 @@ public class EditProfileServiceImpl implements EditProfileService {
             user.setSurname(editProfileForm.getSurname());
             user.setPhoneNumber(editProfileForm.getPhoneNumber());
 
-            Address address = createAddress(editProfileForm);
-            address.setUser(user);
+            Address address = createAddress(user, editProfileForm);
 
             userRepository.save(user);
-            return editProfile(principal, editProfileForm);
+            addressRepository.save(address);
+            return editProfileSuccess(principal);
         }
     }
 
+    private ModelAndView editProfileSuccess(Principal principal){
+        ModelAndView modelAndView = new ModelAndView(EDIT_PROFILE_SUCCESS_VIEW_JSP);
+        String role = userRepository.findByLogin(principal.getName()).getRole();
+        modelAndView.addObject("role", role);
+        modelAndView.addObject("username", principal.getName());
+        return modelAndView;
+    }
 
-    private Address createAddress(EditProfileForm editProfileForm) {
-        Address address = new Address();
+    private Address createAddress(User user, EditProfileForm editProfileForm) {
+        Address address = addressRepository.findByUser(user);
+        if(address == null){
+            address = new Address();
+            address.setUser(user);
+        }
+
         address.setStreet(editProfileForm.getStreet());
         address.setStreetNumber(editProfileForm.getStreetNumber());
         address.setFlatNumber(editProfileForm.getFlatNumber());
