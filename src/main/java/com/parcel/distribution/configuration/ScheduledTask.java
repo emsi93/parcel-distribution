@@ -32,8 +32,18 @@ public class ScheduledTask {
     @Scheduled(fixedRate = 1000 * 60 * 60)
     public void checkFiles() throws IOException {
         String path = servletContext.getRealPath("/WEB-INF/documents");
-        FileUtils.cleanDirectory(new File(path));
-        log.info("DELETED FILES FROM documents");
+        File directory = new File(path);
+        String[] myFiles;
+        if(directory.isDirectory()){
+            myFiles = directory.list();
+            for (int i = 0; i < myFiles.length; i++) {
+                if(myFiles[i].contains(".pdf")){
+                    File myFile = new File(directory, myFiles[i]);
+                    myFile.delete();
+                    log.info("DELETED " + myFiles[i] + " FROM documents");
+                }
+            }
+        }
     }
 
     @Scheduled(fixedRate = 1000 * 60 * 60)
