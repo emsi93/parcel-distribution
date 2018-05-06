@@ -29,6 +29,8 @@ public class AdminServiceImpl implements AdminService {
     private final static String ADMIN_ADD_COURIER_VIEW_JSP = "admin/addcourier";
     private final static String ADMIN_ADD_ADMIN_VIEW_JSP = "admin/addadmin";
     private final static String ADMIN_COURIER_LIST_VIEW_JSP = "admin/courierlist";
+    private static final String ADMIN_ADD_ADMIN_SUCCESS_VIEW_JSP = "admin/addadmin_success";
+    private static final String ADMIN_ADD_COURIER_SUCCESS_VIEW_JSP = "admin/addcourier_success";
 
     @Autowired
     private CourierValidator courierValidator;
@@ -67,8 +69,16 @@ public class AdminServiceImpl implements AdminService {
             courier.setPhoneNumber(courierForm.getPhoneNumber());
             courier.setEmail(courierForm.getEmail());
             courierRepository.save(courier);
-            return addCourier(principal, courierForm);
+            return addCourierSuccess(principal);
         }
+    }
+
+    private ModelAndView addCourierSuccess(Principal principal){
+        ModelAndView modelAndView = new ModelAndView(ADMIN_ADD_COURIER_SUCCESS_VIEW_JSP);
+        String role = userRepository.findByLogin(principal.getName()).getRole();
+        modelAndView.addObject("role", role);
+        modelAndView.addObject("username", principal.getName());
+        return modelAndView;
     }
 
     @Override
@@ -97,8 +107,16 @@ public class AdminServiceImpl implements AdminService {
             user.setName(adminForm.getName());
             user.setSurname(adminForm.getSurname());
             userRepository.save(user);
-            return addAdmin(principal, adminForm);
+            return addAdminSuccess(principal);
         }
+    }
+
+    private ModelAndView addAdminSuccess(Principal principal){
+        ModelAndView modelAndView = new ModelAndView(ADMIN_ADD_ADMIN_SUCCESS_VIEW_JSP);
+        String role = userRepository.findByLogin(principal.getName()).getRole();
+        modelAndView.addObject("role", role);
+        modelAndView.addObject("username", principal.getName());
+        return modelAndView;
     }
 
     @Override

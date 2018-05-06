@@ -160,7 +160,7 @@
                                 </div>
                             </div>
 
-                            <button class="submit btn btn-success" type="button" id="return3"><spring:message
+                            <button class="submit btn btn-success" type="button" id="return2"><spring:message
                                     code='return'/></button>
                             <spring:message code='newparcel.finish' var="createButton"/>
                             <form:input class="submit btn btn-success" path="" type="submit"
