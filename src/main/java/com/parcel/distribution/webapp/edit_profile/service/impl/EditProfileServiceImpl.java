@@ -4,8 +4,10 @@ import com.parcel.distribution.db.entity.Address;
 import com.parcel.distribution.db.entity.User;
 import com.parcel.distribution.db.repository.AddressRepository;
 import com.parcel.distribution.db.repository.UserRepository;
+import com.parcel.distribution.webapp.edit_profile.form.ChangePasswordForm;
 import com.parcel.distribution.webapp.edit_profile.form.EditProfileForm;
 import com.parcel.distribution.webapp.edit_profile.service.EditProfileService;
+import com.parcel.distribution.webapp.edit_profile.validator.ChangePasswordValidator;
 import com.parcel.distribution.webapp.edit_profile.validator.EditFormValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class EditProfileServiceImpl implements EditProfileService {
 
     private static final String EDIT_PROFILE_VIEW_JSP = "edit_profile/edit";
     private static final String EDIT_PROFILE_SUCCESS_VIEW_JSP = "edit_profile/edit_success";
+    private static final String EDIT_PROFILE_CHANGE_PASSWORD_VIEW_JSP = "edit_profile/change_password";
+    private static final String EDIT_PROFILE_CHANGE_PASSWORD_SUCCESS_VIEW_JSP = "edit_profile/change_password_success";
 
     @Autowired
     private UserRepository userRepository;
@@ -34,6 +38,9 @@ public class EditProfileServiceImpl implements EditProfileService {
 
     @Autowired
     private EditFormValidator editFormValidator;
+
+    @Autowired
+    private ChangePasswordValidator changePasswordValidator;
 
     @Override
     public ModelAndView editProfile(Principal principal, EditProfileForm editProfileForm) {
@@ -80,6 +87,38 @@ public class EditProfileServiceImpl implements EditProfileService {
             addressRepository.save(address);
             return editProfileSuccess(principal);
         }
+    }
+
+    @Override
+    public ModelAndView changePasswordForm(Principal principal, ChangePasswordForm changePasswordForm) {
+        ModelAndView modelAndView = new ModelAndView(EDIT_PROFILE_CHANGE_PASSWORD_VIEW_JSP);
+        String role = userRepository.findByLogin(principal.getName()).getRole();
+        modelAndView.addObject("role", role);
+        modelAndView.addObject("username", principal.getName());
+        modelAndView.addObject("changePasswordForm", changePasswordForm);
+        return modelAndView;
+    }
+
+    @Override
+    public ModelAndView changePasswordForm(Principal principal, ChangePasswordForm changePasswordForm, BindingResult bindingResult) {
+        changePasswordForm.setLogin(principal.getName());
+        changePasswordValidator.validate(changePasswordForm, bindingResult);
+        if(bindingResult.hasErrors()){
+            return changePasswordForm(principal, changePasswordForm);
+        }else{
+            User user = userRepository.findByLogin(principal.getName());
+            user.setPassword(changePasswordForm.getNewPassword());
+            userRepository.save(user);
+            return changePasswordSuccess(principal);
+        }
+    }
+
+    private ModelAndView changePasswordSuccess(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView(EDIT_PROFILE_CHANGE_PASSWORD_SUCCESS_VIEW_JSP);
+        String role = userRepository.findByLogin(principal.getName()).getRole();
+        modelAndView.addObject("role", role);
+        modelAndView.addObject("username", principal.getName());
+        return modelAndView;
     }
 
     private ModelAndView editProfileSuccess(Principal principal){

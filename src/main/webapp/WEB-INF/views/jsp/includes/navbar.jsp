@@ -40,11 +40,12 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a><spring:message code="signed.as"/> <strong>${username}</strong></a></li>
                         <li class="divider"></li>
-                        <c:if test="${role == 'ROLE_USER'}">
-                            <li><a href="/parcel/distribution/editprofile/edit"><spring:message
+                        <li><a href="/parcel/distribution/editprofile/edit"><spring:message
                                     code='edit.profile.title'/></a></li>
-                            <li class="divider"></li>
-                        </c:if>
+                        <li class="divider"></li>
+                        <li><a href="/parcel/distribution/editprofile/changePassword"><spring:message
+                                code='edit.profile.change.password.title'/></a></li>
+                        <li class="divider"></li>
                         <li><a href="<c:url value="/parcel/distribution/logout" />"><spring:message
                                 code='logout.button'/></a></li>
                     </ul>

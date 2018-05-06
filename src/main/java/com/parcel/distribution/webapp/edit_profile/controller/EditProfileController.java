@@ -1,6 +1,7 @@
 package com.parcel.distribution.webapp.edit_profile.controller;
 
 
+import com.parcel.distribution.webapp.edit_profile.form.ChangePasswordForm;
 import com.parcel.distribution.webapp.edit_profile.form.EditProfileForm;
 import com.parcel.distribution.webapp.edit_profile.service.EditProfileService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,5 +30,15 @@ public class EditProfileController {
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public ModelAndView editProfile(Principal principal, EditProfileForm editProfileForm, BindingResult bindingResult) {
         return service.editProfile(principal, editProfileForm, bindingResult);
+    }
+
+    @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
+    public ModelAndView changePasswordForm(Principal principal, ChangePasswordForm changePasswordForm) {
+        return service.changePasswordForm(principal, changePasswordForm);
+    }
+
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    public ModelAndView changePasswordForm(Principal principal, ChangePasswordForm changePasswordForm, BindingResult bindingResult) {
+        return service.changePasswordForm(principal, changePasswordForm, bindingResult);
     }
 }
