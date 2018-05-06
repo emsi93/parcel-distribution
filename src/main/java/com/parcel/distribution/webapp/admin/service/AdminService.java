@@ -18,4 +18,6 @@ public interface AdminService {
     ModelAndView addAdmin(Principal principal, AdminForm adminForm, BindingResult bindingResult);
 
     ModelAndView courierList(Principal principal);
+
+    ModelAndView userList(Principal principal);
 }

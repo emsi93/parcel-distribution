@@ -2,10 +2,10 @@
 <%@include file="../includes/navbar.jsp" %>
 <div class="container">
 <div class="row">
-    <div class="col-lg-4"></div>
-    <div class="col-lg-4">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
         <h4><label><spring:message code='admin.courierlist'/></label></h4>
-        <table class="table">
+        <table class="table table-striped" style="width:100%">
             <thead>
             <tr>
                 <th>LP.</th>
@@ -29,7 +29,7 @@
             </tbody>
         </table>
     </div>
-    <div class="col-lg-4"></div>
+    <div class="col-lg-2"></div>
 </div>
 </div>
 <%@include file="../includes/bottom.jsp" %>

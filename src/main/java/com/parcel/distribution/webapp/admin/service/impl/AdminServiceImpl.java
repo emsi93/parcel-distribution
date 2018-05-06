@@ -31,6 +31,7 @@ public class AdminServiceImpl implements AdminService {
     private final static String ADMIN_COURIER_LIST_VIEW_JSP = "admin/courierlist";
     private static final String ADMIN_ADD_ADMIN_SUCCESS_VIEW_JSP = "admin/addadmin_success";
     private static final String ADMIN_ADD_COURIER_SUCCESS_VIEW_JSP = "admin/addcourier_success";
+    private static final String ADMIN_USER_LIST_VIEW_JSP = "admin/userlist";
 
     @Autowired
     private CourierValidator courierValidator;
@@ -127,6 +128,17 @@ public class AdminServiceImpl implements AdminService {
         modelAndView.addObject("username", principal.getName());
         List<Courier> courierList = courierRepository.findAll();
         modelAndView.addObject("courierList", courierList);
+        return modelAndView;
+    }
+
+    @Override
+    public ModelAndView userList(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView(ADMIN_USER_LIST_VIEW_JSP );
+        String role = userRepository.findByLogin(principal.getName()).getRole();
+        modelAndView.addObject("role", role);
+        modelAndView.addObject("username", principal.getName());
+        List<User> userList = userRepository.findAll();
+        modelAndView.addObject("userList", userList);
         return modelAndView;
     }
 }

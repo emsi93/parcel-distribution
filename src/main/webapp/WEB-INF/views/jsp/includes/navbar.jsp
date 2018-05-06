@@ -19,7 +19,10 @@
                                     code='addadmin.title'/></a></li>
                             <li class="divider"></li>
                             <li><a href="/parcel/distribution/admin/courierlist"><spring:message
-                                    code='addadmin.title'/></a></li>
+                                    code='admin.courierlist'/></a></li>
+                            <li class="divider"></li>
+                            <li><a href="/parcel/distribution/admin/userlist"><spring:message
+                                    code='admin.userlist'/></a></li>
                         </c:if>
                         <c:if test="${role == 'ROLE_USER'}">
                             <li><a href="/parcel/distribution/parcel/newparcel"><spring:message

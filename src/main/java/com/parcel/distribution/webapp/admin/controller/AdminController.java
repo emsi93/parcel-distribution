@@ -44,4 +44,9 @@ public class AdminController {
         return adminService.courierList(principal);
     }
 
+    @RequestMapping(value = "/userlist", method = RequestMethod.GET)
+    public ModelAndView userList(Principal principal) {
+        return adminService.userList(principal);
+    }
+
 }
