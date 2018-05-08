@@ -8,4 +8,6 @@ public interface CourierRepository  extends JpaRepository<Courier, Integer> {
     Courier findByLogin(String login);
 
     Courier findByEmail(String email);
+
+    Courier findByLoginAndPasswordAndActive(String login, String password, boolean active);
 }
