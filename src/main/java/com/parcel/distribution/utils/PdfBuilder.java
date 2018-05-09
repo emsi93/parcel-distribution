@@ -25,31 +25,66 @@ public class PdfBuilder {
     }
 
     private void setContent() throws DocumentException {
-        Font font = FontFactory.getFont("times-roman", "ISO-8859-2", 12);
+        Font font = FontFactory.getFont("times-roman", "ISO-8859-2", 12, 1);
+        Font fontBold = FontFactory.getFont("times-roman", "ISO-8859-2", 10, 1);
         Font font2 = FontFactory.getFont("times-roman", "ISO-8859-2", 10);
+        Font font3 = FontFactory.getFont("times-roman", "ISO-8859-2", 7);
 
         Paragraph header = new Paragraph();
         header.setFont(font);
         header.setAlignment(2);
         header.add("NAGłÓWEK");
+        header.add("\n");
+        header.add("\n");
+        header.add("\n");
+        header.add("\n");
         document.add(header);
 
         Paragraph content = new Paragraph();
         content.setAlignment(0);
         PdfPTable table = new PdfPTable(2);
+        table.setWidthPercentage(100);
+
         PdfPCell cell;
-        cell = new PdfPCell(new Phrase("Skąd:", font2));
+        cell = new PdfPCell(new Phrase("Skąd", fontBold));
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("Dokąd:", font2));
+        cell = new PdfPCell(new Phrase("Dokąd", fontBold));
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("Ostrowskiego 20 m 19\n97-200 Tomaszów Mazowiecki", font2));
+
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("Adres:", font3));
+        cell.addElement(new Phrase("Ostrowskiego 20 m 19\n97-200 Tomaszów Mazowiecki", font2));
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("Zawadzka 133\n97-200 Tomaszów Mazowiecki", font2));
+
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("Adres:", font3));
+        cell.addElement(new Phrase("Zawadzka 133\n97-200 Tomaszów Mazowiecki", font2));
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("Nadawca: Michał Krejpowicz\nEmail: krejpowiczmichal@gmail.com\nTelefon: 123456789", font2));
+
+
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("Nadawca:", font3));
+        cell.addElement(new Phrase("Michał Krejpowicz", font2));
+        cell.addElement(new Phrase("\n"));
+        cell.addElement(new Phrase("E-mail:", font3));
+        cell.addElement(new Phrase("krejpowiczmichal@gmail.com", font2));
+        cell.addElement(new Phrase("\n"));
+        cell.addElement(new Phrase("Telefon:", font3));
+        cell.addElement(new Phrase("123456789", font2));
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("Odbiorca: Patryk Kucharski\nEmail: kucharskipatryk@gmail.com\nTelefon: 123456789", font2));
+
+
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("Nadawca:", font3));
+        cell.addElement(new Phrase("Michał Krejpowicz", font2));
+        cell.addElement(new Phrase("\n"));
+        cell.addElement(new Phrase("E-mail:", font3));
+        cell.addElement(new Phrase("krejpowiczmichal@gmail.com", font2));
+        cell.addElement(new Phrase("\n"));
+        cell.addElement(new Phrase("Telefon:", font3));
+        cell.addElement(new Phrase("123456789", font2));
         table.addCell(cell);
+
         table.setHorizontalAlignment(0);
         content.add(table);
         document.add(content);
@@ -61,6 +96,7 @@ public class PdfBuilder {
         codeQrImage.scaleAbsolute(100, 100);
         PdfPTable table2 = new PdfPTable(1);
         table2.setHorizontalAlignment(0);
+        table2.setWidthPercentage(100);
         cell = new PdfPCell();
         cell.addElement(codeQrImage);
         table2.addCell(cell);
@@ -71,7 +107,9 @@ public class PdfBuilder {
         parcelDescription.setAlignment(0);
         PdfPTable table3 = new PdfPTable(1);
         table3.setHorizontalAlignment(0);
-        cell = new PdfPCell(new Phrase("Opis paczki:", font2));
+        table3.setWidthPercentage(100);
+        cell = new PdfPCell();
+        cell.addElement(new Phrase("Opis paczki:", font3));
         table3.addCell(cell);
         parcelDescription.add(table3);
         document.add(parcelDescription);
