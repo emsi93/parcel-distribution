@@ -20,6 +20,8 @@ public class ParcelForm {
     private String postCode;
     private String city;
 
+    private String saveOrNo;
+
     //info paczki
 
     private String description;

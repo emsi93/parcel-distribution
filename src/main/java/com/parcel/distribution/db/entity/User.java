@@ -4,6 +4,7 @@ package com.parcel.distribution.db.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -42,8 +43,11 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private Address address;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-    private Parcel parcel;
+    @OneToMany(mappedBy = "user")
+    private List<Parcel> parcelList;
+
+    @OneToMany(mappedBy = "user")
+    private List<Recipient> recipientList;
 
     public User() {
 

@@ -28,7 +28,9 @@
                             <li><a href="/parcel/distribution/parcel/newparcel"><spring:message
                                     code='newparcel.navbar.button'/></a></li>
                             <li class="divider"></li>
-                            <li><a href="#">Jeszcze jeden oddzielony link</a></li>
+                            <li><a href="/parcel/distribution/contacts/newcontact"><spring:message code='contact.new'/></a></li>
+                            <li class="divider"></li>
+                            <li><a href="/parcel/distribution/contacts/list"><spring:message code='contact.list'/></a></li>
                         </c:if>
                     </ul>
                 </li>

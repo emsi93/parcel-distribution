@@ -43,4 +43,8 @@ public class Recipient {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "recipient")
     private Parcel parcel;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

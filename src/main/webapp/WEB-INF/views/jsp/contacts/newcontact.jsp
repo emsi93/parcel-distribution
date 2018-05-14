@@ -6,15 +6,14 @@
         <div class="col-lg-4">
             <div class="panel panel-warning box">
                 <div class="panel-heading">
-                    <h4><label><spring:message code='newparcel.title'/></label></h4>
+                    <h4><label><spring:message code='contact.new'/></label></h4>
                 </div>
                 <div class="panel-body">
-                    <form:form method="post" modelAttribute="parcelForm" action="/parcel/distribution/parcel/newparcel"
+                    <form:form method="post" modelAttribute="contactForm" action="/parcel/distribution/contacts/newcontact"
                                role="form">
                         <div id="step1">
-                            <h4><label><spring:message code='newparcel.recipient'/></label></h4>
                             <div class="form-group">
-                                <label for="name"><spring:message code='newparcel.name'/></label>
+                                <label for="name"><spring:message code='contact.name'/></label>
                                 <form:input id="name" name="name" type="text" path="name" class="form-control"/>
                                 <div class="errors">
                                     <span class="closebtn"
@@ -23,7 +22,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="surname"><spring:message code='newparcel.surname'/></label>
+                                <label for="surname"><spring:message code='contact.surname'/></label>
                                 <form:input id="surname" name="surname" type="text" path="surname"
                                             class="form-control"/>
                                 <div class="errors">
@@ -33,7 +32,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="phoneNumber"><spring:message code='newparcel.phone.number'/></label>
+                                <label for="phoneNumber"><spring:message code='contact.phoneNumber'/></label>
                                 <form:input id="phoneNumber" name="phoneNumber" type="text" path="phoneNumber"
                                             pattern="\d*" class="form-control"/>
                                 <div class="errors">
@@ -43,7 +42,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="email"><spring:message code='newparcel.email'/></label>
+                                <label for="email"><spring:message code='contact.email'/></label>
                                 <form:input id="email" name="email" type="email" path="email" class="form-control"/>
                                 <div class="errors">
                                     <span class="closebtn"
@@ -56,7 +55,6 @@
                         </div>
 
                         <div id="step2" style="display: none;">
-                            <h4><label><spring:message code='newparcel.address'/></label></h4>
                             <div class="form-group">
                                 <label for="street"><spring:message code='newparcel.street'/></label>
                                 <form:input id="street" name="street" type="text" path="street" class="form-control"/>
@@ -105,72 +103,12 @@
                                     <form:errors path="city" element="div"/>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="saveOrNo"><spring:message code='newparcel.add.contact'/></label>
-                                <form:checkbox path="saveOrNo" name = "saveOrNo" value="yes"/><spring:message code='yes'/>
-                            </div>
                             <button class="submit btn btn-success" type="button" id="return2"><spring:message
-                                    code='return'/></button>
-                            <button class="submit btn btn-success" type="button" id="next2"><spring:message
-                                    code='next'/></button>
-                        </div>
-
-                        <div id="step3" style="display: none;">
-                            <h4><label><spring:message code='newparcel.parcelinfo'/></label></h4>
-                            <div class="form-group">
-                                <label for="description"><spring:message code='newparcel.description'/></label>
-                                <form:input id="description" name="description" type="text" path="description"
-                                            class="form-control"/>
-                                <div class="errors">
-                                    <span class="closebtn"
-                                          onclick="this.parentElement.style.display='none';">&times;</span>
-                                    <form:errors path="description" element="div"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="x">x</label>
-                                <form:input id="x" name="x" type="number" path="x" class="form-control"/>
-                                <div class="errors">
-                                    <span class="closebtn"
-                                          onclick="this.parentElement.style.display='none';">&times;</span>
-                                    <form:errors path="x" element="div"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="y">y</label>
-                                <form:input id="y" name="y" type="number" path="y" class="form-control"/>
-                                <div class="errors">
-                                    <span class="closebtn"
-                                          onclick="this.parentElement.style.display='none';">&times;</span>
-                                    <form:errors path="y" element="div"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="z">z</label>
-                                <form:input id="z" name="z" type="number" path="z" class="form-control"/>
-                                <div class="errors">
-                                    <span class="closebtn"
-                                          onclick="this.parentElement.style.display='none';">&times;</span>
-                                    <form:errors path="z" element="div"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="weight"><spring:message code='newparcel.weight'/></label>
-                                <form:input id="weight" name="weight" type="number" path="weight" class="form-control"/>
-                                <div class="errors">
-                                    <span class="closebtn"
-                                          onclick="this.parentElement.style.display='none';">&times;</span>
-                                    <form:errors path="weight" element="div"/>
-                                </div>
-                            </div>
-
-                            <button class="submit btn btn-success" type="button" id="return3"><spring:message
                                     code='return'/></button>
                             <spring:message code='newparcel.finish' var="createButton"/>
                             <form:input class="submit btn btn-success" path="" type="submit"
                                         value="${createButton}" id="register"></form:input>
                         </div>
-
                     </form:form>
 
                 </div>

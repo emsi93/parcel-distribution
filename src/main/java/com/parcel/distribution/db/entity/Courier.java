@@ -36,6 +36,9 @@ public class Courier {
     @Column(name = "active", nullable = false)
     private boolean active;
 
+    @Column(name = "token")
+    private String token;
+
     @OneToMany(mappedBy = "courier")
     private List<Parcel> parcelList;
 }

@@ -7,5 +7,6 @@ public class ResponseAuthentication {
 
     private String msg;
     private boolean success;
+    private String token;
 
 }

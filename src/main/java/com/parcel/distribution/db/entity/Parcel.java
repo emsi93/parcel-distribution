@@ -23,8 +23,8 @@ public class Parcel {
     @Column(name = "code", nullable = false, length = 4)
     private String code;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL)
