@@ -27,8 +27,6 @@
                     <input type="hidden" name="${_csrf.parameterName}"
                            value="${_csrf.token}"/>
                     <button type="submit" class="btn btn-success"><spring:message code='login.button.send'/></button>
-                    <span style="float:right"><a href="/password/emailForm"><spring:message
-                            code='login.forgot.password'/></a></span>
                 </form>
             </div>
             <div class="panel-footer">

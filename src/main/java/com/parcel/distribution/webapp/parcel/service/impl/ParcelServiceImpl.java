@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -29,9 +30,11 @@ import java.security.Principal;
 @ConfigurationProperties(prefix = "application")
 public class ParcelServiceImpl implements ParcelService {
 
-    private final static String NEW_PARCEL_VIEW_JSP = "parcel/newparcel";
-    private final static String NEW_PARCEL_VIEW_JSP2 = "parcel/newparcel2";
-    private final static String NEW_PARCEL_VIEW_SUCCESS_JSP = "parcel/newparcel_success";
+    private static final String NEW_PARCEL_VIEW_JSP = "parcel/newparcel";
+    private static final String NEW_PARCEL_VIEW_JSP2 = "parcel/newparcel2";
+    private static final String NEW_PARCEL_VIEW_SUCCESS_JSP = "parcel/newparcel_success";
+    private static final String PARCEL_LIST_VIEW_SUCCESS_JSP = "parcel/list";
+    private static final String PARCEL_DETAILS_VIEW_SUCCESS_JSP = "parcel/details";
 
     @Autowired
     private ParcelFormValidator parcelFormValidator;
@@ -124,7 +127,24 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Override
     public ModelAndView getParcelList(Principal principal) {
-        return null;
+        ModelAndView modelAndView = new ModelAndView(PARCEL_LIST_VIEW_SUCCESS_JSP);
+        User user = userRepository.findByLogin(principal.getName());
+        modelAndView.addObject("role", user.getRole());
+        modelAndView.addObject("username", user.getLogin());
+        List<Parcel> parcelList = parcelRepository.findAllByUserAndStatus(user, true);
+        modelAndView.addObject("parcelList", parcelList);
+        return modelAndView;
+    }
+
+    @Override
+    public ModelAndView getDetails(Integer id, Principal principal) {
+        ModelAndView modelAndView = new ModelAndView(PARCEL_DETAILS_VIEW_SUCCESS_JSP);
+        User user = userRepository.findByLogin(principal.getName());
+        modelAndView.addObject("role", user.getRole());
+        modelAndView.addObject("username", user.getLogin());
+        Parcel parcel = parcelRepository.findById(id);
+        modelAndView.addObject("parcel", parcel);
+        return modelAndView;
     }
 
     private ModelAndView newParcelSuccess(Principal principal){

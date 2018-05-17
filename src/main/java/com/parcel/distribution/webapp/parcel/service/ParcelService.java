@@ -18,5 +18,7 @@ public interface ParcelService {
     ModelAndView newParcelWithContact(int idRecipient, Principal principal, DescriptionForm descriptionForm, BindingResult bindingResult);
 
     ModelAndView getParcelList(Principal principal);
+
+    ModelAndView getDetails(Integer id, Principal principal);
 }
 
