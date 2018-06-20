@@ -21,6 +21,7 @@ public class HelloWorldController {
     private final String INDEX_VIEW_JSP = "index";
     private final String LOCATION_VIEW_JSP = "location";
     private final String ERROR_PARCEL_VIEW_JSP = "error/errorParcel_view";
+    private final String ERROR_PARCEL_VIEW_JSP2 = "error/errorParcel2_view";
 
     @Autowired
     private ParcelRepository parcelRepository;
@@ -64,6 +65,9 @@ public class HelloWorldController {
         Parcel parcel = parcelRepository.findByIdAndStatus(idParcel, true);
         if( parcel == null)
             return new ModelAndView(ERROR_PARCEL_VIEW_JSP);
+
+        if ( parcel.getCourier() == null )
+            return new ModelAndView(ERROR_PARCEL_VIEW_JSP2);
 
         modelAndView.addObject("parcel", parcel);
         modelAndView.addObject("role", "ROLE_GUEST");
