@@ -41,4 +41,10 @@ public class Courier {
 
     @OneToMany(mappedBy = "courier")
     private List<Parcel> parcelList;
+
+    @Column(name = "lat")
+    private Double lat;
+
+    @Column(name = "lng")
+    private Double lng;
 }

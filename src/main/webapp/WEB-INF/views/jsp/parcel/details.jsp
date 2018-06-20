@@ -12,6 +12,11 @@
         ${parcel.recipient.street} ${parcel.recipient.streetNumber}<br>
         ${parcel.recipient.postCode}, ${parcel.recipient.city}<br><br>
 
+        <strong><spring:message code="parcel.courier"/></strong><br>
+        <spring:message code="parcel.name.surname"/>: ${parcel.courier.name} ${parcel.courier.surname}<br>
+        <spring:message code="newparcel.phone.number"/> ${parcel.courier.phoneNumber}<br>
+        <spring:message code="newparcel.email"/>  ${parcel.courier.email}<br><br>
+
         <strong><spring:message code="parcel"/></strong><br>
         <spring:message code="parcel.description"/>: ${parcel.description}<br>
         <spring:message code="parcel.dimensions"/>: ${parcel.parcelInfo.x} x ${parcel.parcelInfo.y} x ${parcel.parcelInfo.z}<br>
@@ -26,18 +31,23 @@
     function initMap() {
         var directionsDisplay = new google.maps.DirectionsRenderer;
         var directionsService = new google.maps.DirectionsService;
+        var myLatLng = {lat: Number(${parcel.courier.lat}), lng: Number(${parcel.courier.lng})};
+
         var map = new google.maps.Map(document.getElementById('map'), {
             zoom : 8,
-            center : {
-                lat : 52.13,
-                lng : 21.00
-            }
+            center : myLatLng
+        });
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: '<spring:message code="parcel.position"/>'
         });
         var trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(map);
         directionsDisplay.setMap(map);
         calculateAndDisplayRoute(directionsService, directionsDisplay);
     }
+
     function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         directionsService.route({
             origin : "Polska, ${parcel.user.address.city }, ${parcel.user.address.street }",
@@ -49,6 +59,10 @@
             }
         });
     }
+</script>
+<script
+        src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+
 </script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQAR809YkzO5lbIQ_dht4OlSFEaznt2T4&callback=initMap">

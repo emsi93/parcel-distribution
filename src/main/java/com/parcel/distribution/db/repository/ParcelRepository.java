@@ -11,4 +11,6 @@ public interface ParcelRepository  extends JpaRepository<Parcel, Integer> {
     List<Parcel> findAllByUserAndStatus(User user, boolean status);
 
     Parcel findById(int id);
+
+    Parcel findByIdAndStatus(int id, boolean status);
 }

@@ -30,6 +30,8 @@ public class SecurityController {
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return new ModelAndView("logout/logout_view");
+        ModelAndView modelAndView = new ModelAndView("logout/logout_view");
+        modelAndView.addObject("role", "ROLE_GUEST");
+        return modelAndView;
     }
 }
