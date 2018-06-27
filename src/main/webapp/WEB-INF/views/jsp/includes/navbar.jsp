@@ -8,9 +8,10 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
+                    <c:if test="${role == 'ROLE_ADMIN' || role == 'ROLE_USER'}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-
+                        </c:if>
                         <c:if test="${role == 'ROLE_ADMIN'}">
                             <li><a href="/parcel/distribution/admin/addcourier"><spring:message
                                     code='addcourier.title'/></a></li>

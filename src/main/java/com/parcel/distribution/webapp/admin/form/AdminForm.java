@@ -12,4 +12,5 @@ public class AdminForm {
     private String email;
     private String password;
     private String passwordConfirm;
+    private String role;
 }

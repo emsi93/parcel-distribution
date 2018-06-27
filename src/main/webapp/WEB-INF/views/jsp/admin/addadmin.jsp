@@ -43,6 +43,15 @@
                                 <form:errors path="passwordConfirm" element="div" />
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="role"><spring:message code='addadmin.role'/></label>
+                            <form:select path="role" items="${roleList}"
+                                         class="form-control" />
+                            <div class="errors">
+                                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                                <form:errors path="role" element="div" />
+                            </div>
+                        </div>
                         <button class="submit btn btn-success" type="button" id="next1"><spring:message
                                 code='next'/></button>
                     </div>

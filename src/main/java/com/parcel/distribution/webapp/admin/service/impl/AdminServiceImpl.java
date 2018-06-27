@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -89,6 +90,10 @@ public class AdminServiceImpl implements AdminService {
         modelAndView.addObject("role", role);
         modelAndView.addObject("username", principal.getName());
         modelAndView.addObject("adminForm", adminForm);
+        List<String> roleList = new ArrayList<>();
+        roleList.add("ROLE_ADMIN");
+        roleList.add("ROLE_EMPLO");
+        modelAndView.addObject("roleList", roleList);
         return modelAndView;
     }
 
@@ -99,7 +104,7 @@ public class AdminServiceImpl implements AdminService {
             return addAdmin(principal, adminForm);
         } else {
             User user = new User();
-            user.setRole("ROLE_ADMIN");
+            user.setRole(adminForm.getRole());
             user.setActive(true);
             user.setLogin(adminForm.getLogin());
             user.setPassword(adminForm.getPassword());

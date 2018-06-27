@@ -44,6 +44,9 @@ public class AdminValidator implements Validator {
         ValidationUtil.rejectIfEmpty(errors, "password",
                 messageSourceAccessor.getMessage(VALIDATOR_OBLIGATORY_FIELD));
 
+        ValidationUtil.rejectIfEmpty(errors, "role",
+                messageSourceAccessor.getMessage(VALIDATOR_OBLIGATORY_FIELD));
+
         ValidationUtil.rejectIfEmpty(errors, "passwordConfirm",
                 messageSourceAccessor.getMessage(VALIDATOR_OBLIGATORY_FIELD));
 
