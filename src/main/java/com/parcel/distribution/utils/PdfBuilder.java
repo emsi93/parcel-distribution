@@ -139,6 +139,7 @@ public class PdfBuilder {
         table3.setWidthPercentage(100);
         cell = new PdfPCell();
         cell.addElement(new Phrase("Opis paczki:", font3));
+        cell.addElement(new Phrase(parcel.getDescription(), font2));
         table3.addCell(cell);
         parcelDescription.add(table3);
         document.add(parcelDescription);

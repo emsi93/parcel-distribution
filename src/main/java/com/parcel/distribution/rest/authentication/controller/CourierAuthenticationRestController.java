@@ -20,7 +20,7 @@ public class CourierAuthenticationRestController {
     private CourierRepository courierRepository;
 
     @RequestMapping(value = "/authentication_courier", method = RequestMethod.POST)
-    public ResponseAuthentication authentication_courier(@RequestBody RequestAuthentication request) {
+    public ResponseAuthentication authenticationCourier(@RequestBody RequestAuthentication request) {
 
         ResponseAuthentication response = buildResponse("error", false);
 
@@ -38,7 +38,7 @@ public class CourierAuthenticationRestController {
     }
 
     @RequestMapping(value = "/check_token", method = RequestMethod.POST)
-    public ResponseAuthentication authentication_courier(@RequestBody RequestCheckToken request) {
+    public ResponseAuthentication checkToken(@RequestBody RequestCheckToken request) {
 
         ResponseAuthentication response = buildResponse("error", false);
 
