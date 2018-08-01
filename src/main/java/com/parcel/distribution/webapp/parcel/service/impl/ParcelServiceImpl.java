@@ -81,7 +81,7 @@ public class ParcelServiceImpl implements ParcelService {
 
             Parcel parcel = new Parcel();
             parcel.setUser(user);
-            parcel.setStatus(true);
+            parcel.setStatus("DO ODEBRANIA");
             parcel.setParcelInfo(parcelInfo);
             parcel.setRecipient(recipient);
             parcel.setCode(Code.generate());
@@ -115,7 +115,7 @@ public class ParcelServiceImpl implements ParcelService {
 
             Parcel parcel = new Parcel();
             parcel.setUser(user);
-            parcel.setStatus(true);
+            parcel.setStatus("DO ODEBRANIA");
             parcel.setParcelInfo(parcelInfo);
             parcel.setRecipient(recipient);
             parcel.setCode(Code.generate());

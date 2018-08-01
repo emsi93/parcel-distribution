@@ -62,7 +62,7 @@ public class HelloWorldController {
     @RequestMapping(value = "/location/{id}", method = RequestMethod.GET)
     public ModelAndView location(@PathVariable("id") int idParcel) {
         ModelAndView modelAndView = new ModelAndView(LOCATION_VIEW_JSP);
-        Parcel parcel = parcelRepository.findByIdAndStatus(idParcel, true);
+        Parcel parcel = parcelRepository.findByIdAndStatus(idParcel, null);
         if( parcel == null)
             return new ModelAndView(ERROR_PARCEL_VIEW_JSP);
 

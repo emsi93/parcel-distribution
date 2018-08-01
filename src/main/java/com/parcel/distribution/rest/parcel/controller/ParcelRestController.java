@@ -34,7 +34,7 @@ public class ParcelRestController {
         if (courier != null) {
 
             Parcel parcel = parcelRepository.findById(request.getIdParcel());
-            //parcel.setStatus(true);
+            parcel.setStatus("ODEBRANA PRZEZ KURIERA");
             parcelRepository.save(parcel);
             response.setSuccess(true);
             response.setMsg("success");
@@ -56,7 +56,7 @@ public class ParcelRestController {
             Parcel parcel = parcelRepository.findById(request.getIdParcel());
             if (parcel != null) {
                 if (parcel.getCode().equals(request.getCode())) {
-                    //parcel.setStatus(true);
+                    parcel.setStatus("DOSTARCZONA");
                     parcelRepository.save(parcel);
                     response.setSuccess(true);
                     response.setMsg("success");

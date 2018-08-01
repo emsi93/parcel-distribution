@@ -14,8 +14,8 @@ public class Parcel {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "status", nullable = false)
-    private boolean status;
+    @Column(name = "status", nullable = false, length = 50)
+    private String status;
 
     @Column(name = "description", nullable = false)
     private String description;

@@ -14,7 +14,7 @@ public interface ParcelRepository extends JpaRepository<Parcel, Integer> {
 
     Parcel findById(int id);
 
-    Parcel findByIdAndStatus(int id, boolean status);
+    Parcel findByIdAndStatus(int id, String status);
 
 //    @Query("select p from parcel p where p.id = :idparcel and ( p.status = :start or p.status = :end )")
 //    Parcel findByIdAndBetweenStatus(@Param("idparcel") int id,
