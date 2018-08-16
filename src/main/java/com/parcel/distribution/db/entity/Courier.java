@@ -47,4 +47,9 @@ public class Courier {
 
     @Column(name = "lng")
     private Double lng;
+
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id")
+    private Warehouse warehouse;
+
 }
