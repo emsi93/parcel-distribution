@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ParcelRepository extends JpaRepository<Parcel, Integer> {
 
-    List<Parcel> findAllByUserAndStatus(User user, boolean status);
+    List<Parcel> findAllByUser(User user);
 
     Parcel findById(int id);
 

@@ -1,19 +1,21 @@
 package com.parcel.distribution.webapp.parcel.service.impl;
 
-import com.parcel.distribution.db.entity.Parcel;
-import com.parcel.distribution.db.entity.ParcelInfo;
-import com.parcel.distribution.db.entity.Recipient;
-import com.parcel.distribution.db.entity.User;
+import com.parcel.distribution.db.entity.*;
+import com.parcel.distribution.db.repository.CourierRepository;
 import com.parcel.distribution.db.repository.ParcelRepository;
 import com.parcel.distribution.db.repository.RecipientRepository;
 import com.parcel.distribution.db.repository.UserRepository;
 import com.parcel.distribution.utils.Code;
+import com.parcel.distribution.utils.Coordinates;
+import com.parcel.distribution.utils.FinderCourierUtil;
+import com.parcel.distribution.utils.OpenStreetMapUtils;
 import com.parcel.distribution.webapp.parcel.form.DescriptionForm;
 import com.parcel.distribution.webapp.parcel.form.ParcelForm;
 import com.parcel.distribution.webapp.parcel.service.ParcelService;
 import com.parcel.distribution.webapp.parcel.validator.DescriptionFormValidator;
 import com.parcel.distribution.webapp.parcel.validator.ParcelFormValidator;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
@@ -51,6 +53,9 @@ public class ParcelServiceImpl implements ParcelService {
     @Autowired
     private RecipientRepository recipientRepository;
 
+    @Autowired
+    private CourierRepository courierRepository;
+
 //    @Autowired
 //    private EmailService emailService;
 
@@ -65,7 +70,7 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
-    public ModelAndView newParcel(Principal principal, ParcelForm parcelForm, BindingResult bindingResult) {
+    public ModelAndView newParcel(Principal principal, ParcelForm parcelForm, BindingResult bindingResult) throws JSONException {
         parcelFormValidator.validate(parcelForm, bindingResult);
         if (bindingResult.hasErrors()){
             return newParcel(principal, parcelForm);
@@ -74,7 +79,7 @@ public class ParcelServiceImpl implements ParcelService {
             ParcelInfo parcelInfo = createParcelInfo(parcelForm);
             User user = userRepository.findByLogin(principal.getName());
 
-            if(parcelForm.getSaveOrNo().equals("yes")){
+            if("yes".equals(parcelForm.getSaveOrNo())){
                 recipient.setUser(user);
                // recipientRepository.save(recipient);
             }
@@ -87,6 +92,15 @@ public class ParcelServiceImpl implements ParcelService {
             parcel.setCode(Code.generate());
             parcel.setDescription(parcelForm.getDescription());
 
+            StringBuilder address = new StringBuilder();
+            address.append(parcel.getRecipient().getStreet() + " " + parcel.getRecipient().getStreetNumber() + ",");
+            address.append(parcel.getRecipient().getPostCode() + " " + parcel.getRecipient().getCity());
+            Coordinates coordinates = OpenStreetMapUtils.getInstance().getCoordinates(address.toString());
+
+            List<Courier> courierList = courierRepository.findByActive(true);
+            FinderCourierUtil finder = new FinderCourierUtil();
+            Courier courier = finder.findTheNearestCourier(courierList, coordinates);
+            parcel.setCourier(courier);
             parcelRepository.save(parcel);
             return newParcelSuccess(principal);
         }
@@ -104,7 +118,7 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
-    public ModelAndView newParcelWithContact(int idRecipient, Principal principal, DescriptionForm descriptionForm, BindingResult bindingResult) {
+    public ModelAndView newParcelWithContact(int idRecipient, Principal principal, DescriptionForm descriptionForm, BindingResult bindingResult) throws JSONException {
         descriptionFormValidator.validate(descriptionForm, bindingResult);
         if(bindingResult.hasErrors())
             return newParcelWithContact(idRecipient, principal, descriptionForm);
@@ -120,7 +134,20 @@ public class ParcelServiceImpl implements ParcelService {
             parcel.setRecipient(recipient);
             parcel.setCode(Code.generate());
             parcel.setDescription(descriptionForm.getDescription());
+
+            StringBuilder address = new StringBuilder();
+            address.append(parcel.getRecipient().getStreet() + " " + parcel.getRecipient().getStreetNumber() + ",");
+            address.append(parcel.getRecipient().getPostCode() + " " + parcel.getRecipient().getCity());
+            Coordinates coordinates = OpenStreetMapUtils.getInstance().getCoordinates(address.toString());
+
+            List<Courier> courierList = courierRepository.findByActive(true);
+            FinderCourierUtil finder = new FinderCourierUtil();
+            Courier courier = finder.findTheNearestCourier(courierList, coordinates);
+
+            parcel.setCourier(courier);
             parcelRepository.save(parcel);
+            //emailService.sendToCourier(courierList.get(courier), parcel).
+
             return newParcelSuccess(principal);
         }
     }
@@ -131,7 +158,7 @@ public class ParcelServiceImpl implements ParcelService {
         User user = userRepository.findByLogin(principal.getName());
         modelAndView.addObject("role", user.getRole());
         modelAndView.addObject("username", user.getLogin());
-        List<Parcel> parcelList = parcelRepository.findAllByUserAndStatus(user, true);
+        List<Parcel> parcelList = parcelRepository.findAllByUser(user);
         modelAndView.addObject("parcelList", parcelList);
         return modelAndView;
     }

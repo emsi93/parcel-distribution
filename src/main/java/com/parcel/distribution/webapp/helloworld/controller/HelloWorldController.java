@@ -22,6 +22,7 @@ public class HelloWorldController {
     private final String LOCATION_VIEW_JSP = "location";
     private final String ERROR_PARCEL_VIEW_JSP = "error/errorParcel_view";
     private final String ERROR_PARCEL_VIEW_JSP2 = "error/errorParcel2_view";
+    private final String WAREHOUSE_SUCCESS_VIEW_JSP = "warehouse_success";
 
     @Autowired
     private ParcelRepository parcelRepository;
@@ -73,4 +74,30 @@ public class HelloWorldController {
         modelAndView.addObject("role", "ROLE_GUEST");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/warehouse/{id}", method = RequestMethod.GET)
+    public ModelAndView warehouse(@PathVariable("id") int idParcel, Principal principal) {
+
+        Parcel parcel = parcelRepository.findById(idParcel);
+        if( parcel == null)
+            return new ModelAndView(ERROR_PARCEL_VIEW_JSP);
+
+        if ( parcel.getCourier() == null )
+            return new ModelAndView(ERROR_PARCEL_VIEW_JSP2);
+
+        parcel.setStatus("W MAGAZYNIE");
+        parcel.setCourier(null);
+        parcelRepository.save(parcel);
+
+        return warehouseSuccess(principal);
+    }
+
+    private ModelAndView warehouseSuccess(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView(WAREHOUSE_SUCCESS_VIEW_JSP);
+        String role = userRepository.findByLogin(principal.getName()).getRole();
+        modelAndView.addObject("role", role);
+        modelAndView.addObject("username", principal.getName());
+        return modelAndView;
+    }
+
 }

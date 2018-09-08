@@ -4,6 +4,7 @@ import com.parcel.distribution.webapp.parcel.form.DescriptionForm;
 import com.parcel.distribution.webapp.parcel.form.ParcelForm;
 import com.parcel.distribution.webapp.parcel.service.ParcelService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -27,7 +28,7 @@ public class ParcelController {
     }
 
     @RequestMapping(value = "/newparcel", method = RequestMethod.POST)
-    public ModelAndView newParcel(Principal principal, ParcelForm parcelForm, BindingResult bindingResult) {
+    public ModelAndView newParcel(Principal principal, ParcelForm parcelForm, BindingResult bindingResult) throws JSONException {
         return parcelService.newParcel(principal, parcelForm, bindingResult);
     }
 
@@ -37,7 +38,7 @@ public class ParcelController {
     }
 
     @RequestMapping(value = "/newparcel/{id}", method = RequestMethod.POST)
-    public ModelAndView newParcelWithContact(@PathVariable("id") int idRecipient, Principal principal,  DescriptionForm descriptionForm, BindingResult bindingResult) {
+    public ModelAndView newParcelWithContact(@PathVariable("id") int idRecipient, Principal principal,  DescriptionForm descriptionForm, BindingResult bindingResult) throws JSONException {
         return parcelService.newParcelWithContact(idRecipient, principal, descriptionForm, bindingResult);
     }
 

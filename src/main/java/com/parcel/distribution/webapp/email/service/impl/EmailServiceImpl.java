@@ -1,9 +1,13 @@
 package com.parcel.distribution.webapp.email.service.impl;
 
+import com.parcel.distribution.db.entity.Courier;
 import com.parcel.distribution.db.entity.Link;
+import com.parcel.distribution.db.entity.Parcel;
+import com.parcel.distribution.db.entity.Recipient;
 import com.parcel.distribution.db.repository.LinkRepository;
 import com.parcel.distribution.utils.ErrorCode;
 import com.parcel.distribution.webapp.email.email.Email;
+import com.parcel.distribution.webapp.email.email.EmailToCourier;
 import com.parcel.distribution.webapp.email.service.EmailService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -62,6 +66,31 @@ public class EmailServiceImpl implements EmailService{
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void sendEmailToCourier(Courier courier, Parcel parcel) {
+        Properties properties = initProperties(mailSmtpAuth, mailSmtpStarttlsEnable, mailSmtpHost, mailSmtpPort);
+        Session session = getSession(userName, password, properties);
+        Email email = new EmailToCourier();
+        email.setRecipient(courier.getEmail());
+        email.setTopic("NOWA PACZKA DO ODEBRANIA");
+        StringBuilder content = new StringBuilder();
+        Recipient recipient = parcel.getRecipient();
+        content.append(recipient.getName() + " ");
+        content.append(recipient.getSurname() + "\n");
+        content.append(recipient.getCity() + " " + recipient.getStreetNumber() + "/" + recipient.getFlatNumber() + "\n");
+        content.append(recipient.getPostCode() + " " +  recipient.getCity() + "\n");
+        content.append(recipient.getPhoneNumber());
+        email.setContent(content.toString());
+        try {
+            Message message = buildMessage(session, email);
+            Transport.send(message);
+            log.info("Sent message successfully to " + email);
+        } catch (MessagingException e) {
+            log.info(ErrorCode.generate() + " Message not sent to " + email);
+            e.printStackTrace();
+        }
     }
 
     private void saveLink(Link link) {
