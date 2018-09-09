@@ -7,6 +7,6 @@ public class RequestParcel {
 
     private String login;
     private String token;
-    private int idParcel;
+    private String idParcel;
     private String code;
 }

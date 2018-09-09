@@ -18,6 +18,7 @@
         <spring:message code="newparcel.email"/>  ${parcel.courier.email}<br><br>
 
         <strong><spring:message code="parcel"/></strong><br>
+        <spring:message code="parcel.status"/>: ${parcel.status}<br>
         <spring:message code="parcel.description"/>: ${parcel.description}<br>
         <spring:message code="parcel.dimensions"/>: ${parcel.parcelInfo.x} x ${parcel.parcelInfo.y} x ${parcel.parcelInfo.z}<br>
         <spring:message code="newparcel.weight"/> ${parcel.parcelInfo.weight}<br>

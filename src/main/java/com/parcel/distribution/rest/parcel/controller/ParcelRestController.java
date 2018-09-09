@@ -32,8 +32,8 @@ public class ParcelRestController {
         Courier courier = courierRepository.findByLoginAndTokenAndActive(request.getLogin(), request.getToken(), true);
 
         if (courier != null) {
-
-            Parcel parcel = parcelRepository.findById(request.getIdParcel());
+            int idParcel = Integer.parseInt(request.getIdParcel());
+            Parcel parcel = parcelRepository.findById(idParcel);
             parcel.setStatus("ODEBRANA PRZEZ KURIERA");
             parcelRepository.save(parcel);
             response.setSuccess(true);
@@ -52,8 +52,8 @@ public class ParcelRestController {
         Courier courier = courierRepository.findByLoginAndTokenAndActive(request.getLogin(), request.getToken(), true);
 
         if (courier != null) {
-
-            Parcel parcel = parcelRepository.findById(request.getIdParcel());
+            int idParcel = Integer.parseInt(request.getIdParcel());
+            Parcel parcel = parcelRepository.findById(idParcel);
             if (parcel != null) {
                 if (parcel.getCode().equals(request.getCode())) {
                     parcel.setStatus("DOSTARCZONA");
@@ -75,8 +75,8 @@ public class ParcelRestController {
         Courier courier = courierRepository.findByLoginAndTokenAndActive(request.getLogin(), request.getToken(), true);
 
         if (courier != null) {
-
-            Parcel parcel = parcelRepository.findById(request.getIdParcel());
+            int idParcel = Integer.parseInt(request.getIdParcel());
+            Parcel parcel = parcelRepository.findById(idParcel);
             if (parcel != null) {
                 if (parcel.getCode().equals(request.getCode())) {
                     parcel.setCourier(courier);
