@@ -11,6 +11,6 @@ import lombok.Data;
 @Builder
 public class ParcelJsonObject {
 
-    private Integer id;
+    private String id;
     private String code;
 }

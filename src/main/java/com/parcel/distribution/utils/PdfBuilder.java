@@ -116,7 +116,7 @@ public class PdfBuilder {
         qrcodeParagraph.setAlignment(0);
         Gson gson = new Gson();
         ParcelJsonObject parcelJsonObject = ParcelJsonObject.builder()
-                .id(parcel.getId())
+                .id(String.valueOf(parcel.getId()))
                 .code(parcel.getCode())
                 .build();
         String json = gson.toJson(parcelJsonObject);
